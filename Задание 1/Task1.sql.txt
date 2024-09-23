@@ -1,0 +1,93 @@
+
+
+CREATE TABLE IF NOT EXISTS student06.tb_artist();
+ALTER TABLE IF EXISTS student06.tb_artist
+    ADD COLUMN IF NOT EXISTS artist_id               BIGSERIAL,
+    ADD COLUMN IF NOT EXISTS name                    VARCHAR;
+
+COMMENT ON TABLE  student06.tb_artist                             IS 'Таблица исполнитель';
+COMMENT ON COLUMN student06.tb_artist.artist_id                   IS 'Идентификатор исполнителя';
+COMMENT ON COLUMN student06.tb_artist.name                        IS 'Имя исполнителя';
+
+DO '
+BEGIN
+    IF NOT EXISTS (
+            SELECT 1
+            FROM information_schema.table_constraints
+            WHERE lower(table_name) = ''tb_artist''
+              and lower(table_schema) = ''student06''
+              and lower(constraint_type) = ''primary key''
+        )
+    THEN
+        ALTER TABLE student06.tb_artist ADD primary key (artist_id);
+    END IF;
+END ';
+
+
+
+CREATE TABLE IF NOT EXISTS student06.tb_album();
+ALTER TABLE IF EXISTS student06.tb_album
+    ADD COLUMN IF NOT EXISTS album_id               BIGSERIAL,
+    ADD COLUMN IF NOT EXISTS artist_id              INT,
+    ADD COLUMN IF NOT EXISTS release_year           INT,
+    ADD COLUMN IF NOT EXISTS genre                  VARCHAR;
+
+COMMENT ON TABLE  student06.tb_album                             IS 'Таблица альбом';
+COMMENT ON COLUMN student06.tb_album.album_id                    IS 'Идентификатор альбома';
+COMMENT ON COLUMN student06.tb_album.artist_id                   IS 'Идентификатор исполнителя';
+COMMENT ON COLUMN student06.tb_album.release_year                IS 'Год выпуска';
+COMMENT ON COLUMN student06.tb_album.genre                       IS 'Жанр';
+
+DO '
+BEGIN
+    IF NOT EXISTS (
+            SELECT 1
+            FROM information_schema.table_constraints
+            WHERE lower(table_name) = ''tb_album''
+              and lower(table_schema) = ''student06''
+              and lower(constraint_type) = ''primary key''
+        )
+    THEN
+        ALTER TABLE student06.tb_album ADD primary key (album_id);
+    END IF;
+END ';
+ALTER TABLE student06.tb_album ADD FOREIGN KEY (artist_id) REFERENCES tb_artist(artist_id);
+
+
+CREATE TABLE IF NOT EXISTS student06.tb_track();
+
+ALTER TABLE IF EXISTS student06.tb_track
+    ADD COLUMN IF NOT EXISTS track_id                  BIGSERIAL,
+    ADD COLUMN IF NOT EXISTS artist                    VARCHAR,
+    ADD COLUMN IF NOT EXISTS year                      INT,
+    ADD COLUMN IF NOT EXISTS duration                  TIME,
+    ADD COLUMN IF NOT EXISTS plays                     SMALLINT,
+    ADD COLUMN IF NOT EXISTS genre                     VARCHAR,
+    ADD COLUMN IF NOT EXISTS album_id                  INT
+;
+
+COMMENT ON TABLE  student06.tb_track                             IS 'Таблица Музыкальный Трек';
+COMMENT ON COLUMN student06.tb_track.track_id                    IS 'Идентификатор трека';
+COMMENT ON COLUMN student06.tb_track.name                        IS 'Имя трека';
+COMMENT ON COLUMN student06.tb_track.artist                      IS 'Исполнитель трека';
+COMMENT ON COLUMN student06.tb_track.year                        IS 'Год создания трека';
+COMMENT ON COLUMN student06.tb_track.duration                    IS 'Продолжительность трека';
+COMMENT ON COLUMN student06.tb_track.plays                       IS 'Количесвто прослушиваний';
+COMMENT ON COLUMN student06.tb_track.genre                       IS 'Жанр';
+COMMENT ON COLUMN student06.tb_track.album_id                    IS 'Идентификатор альбома'
+
+
+DO '
+BEGIN
+    IF NOT EXISTS (
+            SELECT 1
+            FROM information_schema.table_constraints
+            WHERE lower(table_name) = ''tb_track''
+              and lower(table_schema) = ''student06''
+              and lower(constraint_type) = ''primary key''
+        )
+    THEN
+        ALTER TABLE student06.tb_track ADD primary key (track_id);
+    END IF;
+END ';
+ALTER TABLE student06.tb_track ADD FOREIGN KEY (album_id) REFERENCES tb_album(album_id);
