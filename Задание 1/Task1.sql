@@ -68,10 +68,11 @@ BEGIN
         )
     THEN
         ALTER TABLE student06.tb_album ADD primary key (album_id);
+        ALTER TABLE student06.tb_album ADD FOREIGN KEY (artist_id) REFERENCES tb_artist(artist_id);
+        ALTER TABLE student06.tb_album ADD FOREIGN KEY (genre_id) REFERENCES tb_genres(genre_id);
     END IF;
 END ';
-ALTER TABLE student06.tb_album ADD FOREIGN KEY (artist_id) REFERENCES tb_artist(artist_id);
-ALTER TABLE student06.tb_album ADD FOREIGN KEY (genre_id) REFERENCES tb_genres(genre_id);
+
 
 
 CREATE TABLE IF NOT EXISTS student06.tb_track();
@@ -103,10 +104,11 @@ BEGIN
         )
     THEN
         ALTER TABLE student06.tb_track ADD primary key (track_id);
+        ALTER TABLE student06.tb_track ADD FOREIGN KEY (album_id) REFERENCES tb_album(album_id);
+        ALTER TABLE student06.tb_track ADD FOREIGN KEY (genre_id) REFERENCES tb_genres(genre_id);
     END IF;
 END ';
-ALTER TABLE student06.tb_track ADD FOREIGN KEY (album_id) REFERENCES tb_album(album_id);
-ALTER TABLE student06.tb_track ADD FOREIGN KEY (genre_id) REFERENCES tb_genres(genre_id);
+
 
 
 CREATE TABLE IF NOT EXISTS student06.tb_track_artists();
