@@ -1,15 +1,35 @@
+
+
 В предложенной модели используются следующие типы связей:
 Один ко многим (One-to-Many):
-	Между Исполнителями и Альбомами (Artists → Albums).
-	Между Альбомами и Треками (Albums → Tracks).
-	Между Жанрами и Альбомами (Genres → Albums).
-	Между Жанрами и Треками (Genres → Tracks).
+	Между Исполнителями и Альбомами (tb_artists → tb_albums).
+	Между Альбомами и Треками (tb_albums → tb_tracks).
+	Между Жанрами и Альбомами (tb_genres → tb_albums).
+	Между Жанрами и Треками (tb_genres → tb_tracks).
 Многие ко многим (Many-to-Many):
-	Между Треками и Исполнителями (Tracks ↔ Artists) через промежуточную таблицу Track_Artists.
+	Между Треками и Исполнителями (tb_tracks ↔ tb_artists) через промежуточную таблицу tb_track_artists.
 
 
 В контексте этой базы данных родительскими таблицами являются:
-	Artists (Исполнители)
-	Genres (Жанры)
-	Albums (Альбомы) (родительская для треков)
-	Tracks (Треки) (родительская для связи с исполнителями через таблицу Track_Artists).
+	tb_artists (Исполнители)
+	tb_genres (Жанры)
+	tb_albums (Альбомы) (родительская для треков)
+	tb_tracks (Треки) (родительская для связи с исполнителями через таблицу tb_track_artists).
+
+Первичные ключи:
+	artist_id в таблице tb_artists.
+	album_id в таблице tb_albums.
+	track_id в таблице tb_tracks.
+	genre_id в таблице tb_genres.
+	Составной ключ track_id + artist_id в таблице tb_track_artists.
+
+Внешние ключи:
+	В таблице tb_albums:
+		artist_id → tb_artists(artist_id)
+		genre_id → tb_genres(genre_id)
+	В таблице tb_Tracks:
+		album_id → tb_albums(album_id)
+		genre_id → tb_genres(genre_id)
+	В таблице tb_track_artists:
+		track_id → tb_tracks(track_id)
+		artist_id → tb_artists(artist_id)
