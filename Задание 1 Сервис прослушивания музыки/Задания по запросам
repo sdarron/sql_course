@@ -1,56 +1,105 @@
-Задание 3
+ Задание 3
 Составьте запрос для поиска исполнителей, у которых есть треки в жанре “N” (например, рок).
+select distinct artist_name 
+FROM tb_artist as art
+    JOIN tb_track_artists as ta
+        ON ta.artist_id = art.artist_id
+    JOIN tb_track as tra
+        ON tra.track_id = ta.artist_id
+    JOIN tb_genres as gen 
+        ON tra.genre_id = gen.genres_id
+    WHERE gen.genres_name = 'Rock';
 
-Добавьте в отчет результат выполнения запроса.
 
 Задание 4
 Составьте запрос для поиска исполнителей, у которых нет ни одного трека в жанре “M” (например, кантри).
+SELECT distinct artist_name 
+FROM tb_artist as art
+    JOIN tb_track_artists as ta
+        ON ta.artist_id = art.artist_id
+    JOIN tb_track as tra
+        ON tra.track_id = ta.artist_id
+    JOIN tb_genres as gen 
+        ON tra.genre_id = gen.genres_id
+    WHERE gen.genres_name <> 'Pop';
 
-Добавьте в отчет результат выполнения запроса.
 
 Задание 5
 Составьте запрос для поиска треков в жанре “Х” (например, поп) с числом прослушиваний, более 30000.
+select track_name 
+	from tb_track as tra
+    join tb_genres as gen 
+        on tra.genre_id = gen.genres_id
+    where gen.genres_name = 'Pop'
+    	and tra.listen_count > 30000 ;
 
-Добавьте в отчет результат выполнения запроса.
 
 Задание 6
 Составьте запрос для поиска исполнителей жанра Y (например, рэп), у которых среднее число прослушиваний треков более 20 000 000.
+SELECT distinct artist_name 
+FROM tb_artist as art
+    JOIN tb_track_artists as ta
+        ON ta.artist_id = art.artist_id
+    JOIN tb_track as tra
+        ON tra.track_id = ta.track_id
+    JOIN tb_genres as gen 
+        ON tra.genre_id = gen.genres_id
+    WHERE gen.genres_name = 'Jazz'
+    	and tra.listen_count > 20000000 ;
 
-Добавьте в отчет результат выполнения запроса.
 
 Задание 7
 Составьте запрос для определения суммы прослушиваний песен в жанре “M”.
+select sum(listen_count) 
+	from tb_track as tra
+    join tb_genres as gen 
+        on tra.genre_id = gen.genres_id
+    where gen.genres_name = 'Pop';
 
-Добавьте результаты выполнения в отчет.
 
 Задание 8
 Составьте запрос для определения суммы прослушиваний по жанрам, отсортированным по возрастанию количества прослушиваний.
+select  genres_name, 
+		sum(listen_count) as sum_count
+		from tb_track as tra
+		join tb_genres as gen 
+	        on tra.genre_id = gen.genres_id
+	    group by genres_name 
+	    order by sum_count asc ;
+
 
 Задание 9
 Составьте запрос определения среднего числа прослушиваний у исполнителей, отсортированных по убыванию количества прослушиваний.
+	   SELECT artist_name,
+			  avg(listen_count) as avg_count
+			FROM tb_artist as art
+		    JOIN tb_track_artists as ta
+		        ON ta.artist_id = art.artist_id
+		    JOIN tb_track as tra
+		        ON tra.track_id = ta.track_id
+		        group by artist_name 
+			    order by avg_count desc;
 
-Добавьте результаты выполнения в отчет.
 
 Задание 10
 Составьте запрос для определения суммы числа прослушиваний по исполнителям, отсортированным по возрастанию числа прослушиваний.
 
-Добавьте результаты выполнения в отчет.
+
 
 Задание 11
 Составьте запрос для определения количества песен у каждого исполнителя.
 
-Добавьте результаты выполнения в отчет.
+
 
 Задание 12
 Добавьте в список жанров несколько новых жанров.
 
 Напишите JOIN запросы для таблиц исполнители и песни: INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL JOIN.
 
-Добавьте результаты выполнения в отчет.
+
 
 Задание 13
 Добавьте в список песню какого-либо исполнителя, заполнив ее жанр значением NULL.
 
 Напишите запрос по выводу списка жанров, для которых нет песен в таблице (с учетом особенностей сравнения с NULL).
 
-Добавьте результаты выполнения в отчет

@@ -20,7 +20,10 @@ INSERT INTO tb_album (album_name, artist_id, release_year, genre_id) VALUES
 INSERT INTO tb_track (track_name, album_id, genre_id, duration, listen_count, release_year) VALUES 
 ('Track 1', 1, 1, '00:03:30', 100, 2021),  -- Album 1, Pop
 ('Track 2', 2, 2, '00:04:00', 200, 2022),  -- Album 2, Rock
-('Track 3', 3, 3, '00:05:00', 300, 2023);  -- Album 3, Jazz
+('Track 3', 3, 3, '00:05:00', 300, 2023),  -- Album 3, Jazz
+('Track 4', 1, 1, '00:03:30', 100, 2021),  -- Album 1, Pop
+('Track 5', 2, 2, '00:04:00', 200, 2022),  -- Album 2, Rock
+('Track 6', 3, 3, '00:05:00', 300, 2023);  -- Album 3, Jazz
 
 -- 5. Вставка данных в таблицу Track_Artists (Промежуточная таблица для связи треков и исполнителей)
 -- Связь треков с несколькими исполнителями
@@ -30,4 +33,10 @@ INSERT INTO tb_track_artists (track_id, artist_id) VALUES
 (2, 2),  -- Track 2 исполняет Artist B
 (2, 3),  -- Track 2 исполняет Artist C (коллаборация)
 (3, 3),  -- Track 3 исполняет Artist C
-(3, 1);  -- Track 3 исполняет Artist A (коллаборация)
+(3, 1),  -- Track 3 исполняет Artist A (коллаборация)
+(4, 1),  -- Track 1 исполняет Artist A
+(4, 2),  -- Track 1 исполняет Artist B (коллаборация)
+(5, 2),  -- Track 2 исполняет Artist B
+(5, 3),  -- Track 2 исполняет Artist C (коллаборация)
+(6, 3),  -- Track 3 исполняет Artist C
+(6, 1);  -- Track 3 исполняет Artist A (коллаборация)
