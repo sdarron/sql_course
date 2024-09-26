@@ -83,7 +83,15 @@ select  genres_name,
 
 Задание 10
 Составьте запрос для определения суммы числа прослушиваний по исполнителям, отсортированным по возрастанию числа прослушиваний.
-
+	   SELECT artist_name,
+			  sum(listen_count) as avg_count
+			FROM tb_artist as art
+		    JOIN tb_track_artists as ta
+		        ON ta.artist_id = art.artist_id
+		    JOIN tb_track as tra
+		        ON tra.track_id = ta.track_id
+		        group by artist_name 
+			    order by avg_count ;
 
 
 Задание 11
