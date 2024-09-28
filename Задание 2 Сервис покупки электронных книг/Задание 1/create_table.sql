@@ -10,8 +10,7 @@ CREATE TABLE Books (
     title VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     publish_year INT,
-    category_id INT,
-    genre VARCHAR(255),        
+    category_id INT,     
     downloads INT DEFAULT 0,   
     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
 );
