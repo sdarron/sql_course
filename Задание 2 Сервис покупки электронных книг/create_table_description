@@ -1,0 +1,100 @@
+База данных сервиса покупки электронных книг
+
+ Таблицы, которые будут использоваться:
+Users (Пользователи)
+Books (Книги)
+Authors (Авторы)
+Categories (Категории книг)
+Orders (Заказы)
+Order_Details (Детали заказа)
+Book_Authors (Промежуточная таблица для связи книг и авторов)
+
+1. Таблица Users (Пользователи)
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
+
+2. Таблица Books (Книги)
+    book_id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    publish_year INT,
+    category_id INT,
+    genre VARCHAR(255),        -- Жанр книги (например, "Fantasy", "Mystery")
+    downloads INT DEFAULT 0,  
+    FOREIGN KEY (category_id) REFERENCES Categories(category_id)
+
+3. Таблица Authors (Авторы)
+    author_id INT PRIMARY KEY AUTO_INCREMENT,
+    author_name VARCHAR(255) NOT NULL
+
+4. Таблица Categories (Категории)
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    category_name VARCHAR(255) NOT NULL
+
+5. Таблица Orders (Заказы)
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    order_date DATETIME NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+
+6. Таблица Order_Details (Детали заказа)
+    order_detail_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    book_id INT,
+    quantity INT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    downloads INT NOT NULL,  -- Количество скачиваний, связанное с данным заказом
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
+
+7. Таблица Book_Authors (Промежуточная таблица для связи книг и авторов)
+    book_id INT,
+    author_id INT,
+    PRIMARY KEY (book_id, author_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id),
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id)
+
+
+Типы связей в базе данных
+"Один ко многим" (One-to-Many):
+Users → Orders: Один пользователь может иметь множество заказов.
+Categories → Books: Один жанр (категория) может быть у множества книг.
+Orders → Order_Details: Один заказ может содержать множество строк деталей заказа.
+Books → Order_Details: Одна книга может встречаться в нескольких строках деталей заказа.
+
+"Многие ко многим" (Many-to-Many):
+Books ↔ Authors: Одна книга может быть написана несколькими авторами, и один автор может написать множество книг. Эта связь реализована через Book_Authors.
+Первичные и внешние ключи
+
+Первичные ключи:
+user_id в таблице Users.
+book_id в таблице Books.
+author_id в таблице Authors.
+category_id в таблице Categories.
+order_id в таблице Orders.
+order_detail_id в таблице Order_Details.
+Составной первичный ключ book_id и author_id в таблице Book_Authors.
+
+Внешние ключи:
+category_id в таблице Books — ссылается на Categories(category_id).
+user_id в таблице Orders — ссылается на Users(user_id).
+order_id в таблице Order_Details — ссылается на Orders(order_id).
+book_id в таблице Order_Details — ссылается на Books(book_id).
+book_id и author_id в таблице Book_Authors — ссылаются соответственно на Books(book_id) и Authors(author_id).
+
+Родительские таблицы
+Родительские таблицы — те, которые предоставляют данные для других таблиц через внешние ключи:
+Users (родительская для Orders)
+Categories (родительская для Books)
+Books (родительская для Order_Details и Book_Authors)
+Authors (родительская для Book_Authors)
+Orders (родительская для Order_Details)
+
+Эта база данных спроектирована в третьей нормальной форме, поскольку:
+Все атрибуты являются атомарными.
+Удалены избыточные зависимости, и все зависимые данные разделены на отдельные таблицы.
+Таблицы, которые имеют связи "многие ко многим", 
+разнесены с использованием промежуточных таблиц (например, Book_Authors).

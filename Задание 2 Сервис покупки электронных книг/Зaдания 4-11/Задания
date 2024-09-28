@@ -1,0 +1,83 @@
+Задание 4
+Составьте индекс по автору книги.
+Добавьте результаты выполнения в отчет.
+CREATE INDEX idx_books_authors ON Book_Authors (author_id);
+
+SELECT 
+    i.relname AS index_name,
+    idx.indisunique AS is_unique,
+    idx.indisprimary AS is_primary,
+    pg_get_indexdef(idx.indexrelid) AS index_definition
+FROM 
+    pg_index idx
+JOIN 
+    pg_class i ON idx.indexrelid = i.oid
+JOIN 
+    pg_class t ON idx.indrelid = t.oid
+WHERE 
+    t.relname =  'book_authors';
+
+
+Задание 5
+Составьте запрос для определения суммы скачиваний книг в жанре Science Fiction.
+Добавьте результаты выполнения в отчет.
+select sum(downloads) as downloads_Science_Fiction
+from Books 
+where genre  = 'Science Fiction'
+
+
+Задание 6
+Составьте запрос для определения суммы скачиваний по жанрам.
+select genre,
+	sum(downloads) as downloads
+from Books 
+group by genre
+
+
+Задание 7
+Составьте запрос определения среднего числа скачиваний у авторов.
+Добавьте результаты выполнения в отчет.
+select author_name,
+	avg(downloads) as downloads
+from Books as b
+join Book_Authors as ba
+on b.book_id = ba.book_id
+join Authors as a
+on a.author_id = ba.author_id
+group by author_name
+
+Задание 8
+Составьте запрос для определения суммы числа скачиваний по авторам.
+Добавьте результаты выполнения в отчет.
+select author_name,
+	sum(downloads) as downloads
+from Books as b
+join Book_Authors as ba
+on b.book_id = ba.book_id
+join Authors as a
+on a.author_id = ba.author_id
+group by author_name
+
+Задание 9
+Составьте запрос для определения количества книг у каждого автора.
+Добавьте результаты выполнения в отчет.
+select author_name,
+	count(ba.book_id) as count_books
+from Books as b
+join Book_Authors as ba
+on b.book_id = ba.book_id
+join Authors as a
+on a.author_id = ba.author_id
+group by author_name
+
+
+Задание 10
+Добавьте в список жанров несколько новых жанров: детектив, фэнтези, биография.
+Напишите JOIN запросы для таблиц жанры и книги: INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL JOIN.
+Добавьте результаты выполнения в отчет.
+
+
+Задание 11
+Добавьте в список книгу:
+Доктор Живаго Борис Пастернак 1955 660 NULL 20300
+Напишите запрос по выводу списка жанров книг, для которых нет книг в таблице (с учетом особенностей сравнения с NULL).
