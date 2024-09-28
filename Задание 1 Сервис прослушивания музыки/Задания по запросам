@@ -84,30 +84,77 @@ select  genres_name,
 Задание 10
 Составьте запрос для определения суммы числа прослушиваний по исполнителям, отсортированным по возрастанию числа прослушиваний.
 	   SELECT artist_name,
-			  sum(listen_count) as avg_count
+			  sum(listen_count) as sum_count
 			FROM tb_artist as art
 		    JOIN tb_track_artists as ta
 		        ON ta.artist_id = art.artist_id
 		    JOIN tb_track as tra
 		        ON tra.track_id = ta.track_id
 		        group by artist_name 
-			    order by avg_count ;
+			    order by sum_count ;
 
 
 Задание 11
 Составьте запрос для определения количества песен у каждого исполнителя.
-
+	   SELECT artist_name,
+			  count(*) as count_track
+			FROM tb_artist as art
+		    JOIN tb_track_artists as ta
+		        ON ta.artist_id = art.artist_id
+		        group by artist_name;
 
 
 Задание 12
 Добавьте в список жанров несколько новых жанров.
-
+INSERT INTO tb_genres (genres_name) VALUES 
+('Pop-rock'),
+('Rock'),
+('Jazz'),
+('Classic'),
+('Electronic');
 Напишите JOIN запросы для таблиц исполнители и песни: INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL JOIN.
 
+SELECT artist_name,
+		track_name,
+		genres_name
+FROM tb_artist as art
+    JOIN tb_track_artists as ta
+        ON ta.artist_id = art.artist_id
+    JOIN tb_track as tra
+        ON tra.track_id = ta.track_id
+    JOIN tb_genres as gen 
+        ON tra.genre_id = gen.genres_id
 
+SELECT artist_name,
+		track_name,
+		genres_name
+FROM tb_artist as art
+    JOIN tb_track_artists as ta
+        ON ta.artist_id = art.artist_id
+    JOIN tb_track as tra
+        ON tra.track_id = ta.track_id
+    LEFT outer JOIN tb_genres as gen 
+        ON tra.genre_id = gen.genres_id
+
+SELECT artist_name,
+		track_name,
+		genres_name
+FROM tb_artist as art
+    JOIN tb_track_artists as ta
+        ON ta.artist_id = art.artist_id
+    JOIN tb_track as tra
+        ON tra.track_id = ta.track_id
+    RIGHT OUTER JOIN tb_genres as gen 
+        ON tra.genre_id = gen.genres_id
 
 Задание 13
 Добавьте в список песню какого-либо исполнителя, заполнив ее жанр значением NULL.
-
 Напишите запрос по выводу списка жанров, для которых нет песен в таблице (с учетом особенностей сравнения с NULL).
+
+
+SELECT genres_name
+    FROM tb_track as tra
+    RIGHT OUTER JOIN tb_genres as gen 
+    ON tra.genre_id = gen.genres_id
+    where track_id is null
 
