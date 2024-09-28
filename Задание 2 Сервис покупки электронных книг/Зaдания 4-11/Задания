@@ -72,12 +72,40 @@ group by author_name
 
 
 Задание 10
-Добавьте в список жанров несколько новых жанров: детектив, фэнтези, биография.
+Добавьте в список жанров несколько новых жанров: детектив, роман, биография.
 Напишите JOIN запросы для таблиц жанры и книги: INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL JOIN.
 Добавьте результаты выполнения в отчет.
+INSERT INTO Categories (category_name) VALUES 
+('Detective'),
+('Novel'), 
+('Biography');
 
+select b.*,
+category_name
+from Books as b
+join  Categories as c
+on b.category_id = c.category_id
+
+select category_name,
+		b.*
+from Books as b
+LEFT OUTER JOIN  Categories as c
+on b.category_id = c.category_id
+
+select category_name,
+		b.*
+from Books as b
+RIGHT OUTER JOIN  Categories as c
+on b.category_id = c.category_id
+
+select category_name,
+		b.*
+from Books as b
+FULL JOIN  Categories as c
+on b.category_id = c.category_id
 
 Задание 11
 Добавьте в список книгу:
 Доктор Живаго Борис Пастернак 1955 660 NULL 20300
-Напишите запрос по выводу списка жанров книг, для которых нет книг в таблице (с учетом особенностей сравнения с NULL).
+Напишите запрос по выводу списка жанров книг, для которых нет книг в таблице 
+(с учетом особенностей сравнения с NULL).
