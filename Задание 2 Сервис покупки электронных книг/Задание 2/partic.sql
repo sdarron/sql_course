@@ -5,7 +5,6 @@ CREATE TABLE Books (
     price DECIMAL(10, 2) NOT NULL,
     publish_year INT,
     category_id INT,
-    genre VARCHAR(255), 
     PRIMARY KEY (book_id, downloads),
     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
 )  PARTITION BY RANGE (downloads);

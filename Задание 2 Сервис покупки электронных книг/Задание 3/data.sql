@@ -10,7 +10,7 @@ INSERT INTO Authors (author_id, author_name) VALUES
 (4, 'George Orwell'),
 (5, 'Yuval Noah Harari');
 
-INSERT INTO Books (book_id, title, price, publish_year, category_id, genre, downloads) VALUES 
+INSERT INTO Books (book_id, title, price, publish_year, category_id, downloads) VALUES 
 (1, 'Harry Potter and the Philosopher', 20.00, 1997, 1, 800),
 (2, 'Foundation', 15.00, 1951, 2, 5000),
 (3, 'Murder on the Orient Express', 10.00, 1934, 3, 15000),
