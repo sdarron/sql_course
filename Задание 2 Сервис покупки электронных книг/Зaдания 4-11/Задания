@@ -109,3 +109,12 @@ on b.category_id = c.category_id
 Доктор Живаго Борис Пастернак 1955 660 NULL 20300
 Напишите запрос по выводу списка жанров книг, для которых нет книг в таблице 
 (с учетом особенностей сравнения с NULL).
+
+INSERT INTO Books (book_id, title, price, publish_year, category_id, genre, downloads) VALUES 
+(6, 'Живаго Борис Пастернак', 20, 1955, NULL, NULL, 800);
+
+select category_name
+from Books as b
+RIGHT JOIN  Categories as c
+on b.category_id = c.category_id
+where b.category_id is null

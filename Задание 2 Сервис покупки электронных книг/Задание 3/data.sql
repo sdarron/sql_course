@@ -11,11 +11,11 @@ INSERT INTO Authors (author_id, author_name) VALUES
 (5, 'Yuval Noah Harari');
 
 INSERT INTO Books (book_id, title, price, publish_year, category_id, genre, downloads) VALUES 
-(1, 'Harry Potter and the Philosopher\'s Stone', 20.00, 1997, 1, 'Fantasy', 800),
-(2, 'Foundation', 15.00, 1951, 2, 'Science Fiction', 5000),
-(3, 'Murder on the Orient Express', 10.00, 1934, 3, 'Mystery', 15000),
-(4, '1984', 12.00, 1949, 4, 'Dystopian', 7000),
-(5, 'Sapiens: A Brief History of Humankind', 18.00, 2011, 4, 'Non-Fiction', 25000);
+(1, 'Harry Potter and the Philosopher', 20.00, 1997, 1, 800),
+(2, 'Foundation', 15.00, 1951, 2, 5000),
+(3, 'Murder on the Orient Express', 10.00, 1934, 3, 15000),
+(4, '1984', 12.00, 1949, 4, 7000),
+(5, 'Sapiens: A Brief History of Humankind', 18.00, 2011, 4, 25000);
 
 
 INSERT INTO Book_Authors (book_id, author_id) VALUES 
